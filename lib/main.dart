@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'widgets/option_card.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,11 +18,7 @@ class MainApp extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  OptionCard('First Card', 'The description is here'),
-                  OptionCard('Second Card', 'Another description goes here'),
-                  OptionCard('Third Card', 'Yet another description'),
-                ],
+                children: [Text('Hello World')],
               ),
             ),
           ),
