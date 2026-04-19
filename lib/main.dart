@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dotti/views/home.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,18 +10,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: 'dotti',
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       home: Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [Text('Hello World')],
-              ),
-            ),
+        body: Center(
+          child: Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: const Home(),
           ),
         ),
       ),
