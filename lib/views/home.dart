@@ -1,3 +1,4 @@
+import 'package:dotti/models/meditation.dart';
 import 'package:flutter/material.dart';
 import 'package:dotti/widgets/meditation_card.dart';
 
@@ -9,12 +10,18 @@ class Home extends StatelessWidget {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
-          Expanded(child: MeditationCard()),
+        children: [
+          Expanded(
+            child: MeditationCard(meditations[MeditationType.breathing]!),
+          ),
           SizedBox(width: 16),
-          Expanded(child: MeditationCard()),
+          Expanded(
+            child: MeditationCard(meditations[MeditationType.bodyScan]!),
+          ),
           SizedBox(width: 16),
-          Expanded(child: MeditationCard()),
+          Expanded(
+            child: MeditationCard(meditations[MeditationType.visualization]!),
+          ),
         ],
       ),
     );

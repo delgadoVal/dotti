@@ -1,10 +1,14 @@
+import 'package:dotti/models/meditation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MeditationCard extends StatelessWidget {
-  const MeditationCard({super.key});
+class MeditationCard extends ConsumerWidget {
+  const MeditationCard(this.meditation, {super.key});
+
+  final Meditation meditation;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -32,13 +36,13 @@ class MeditationCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'Respiración 4-7-8',
+                meditation.title,
                 style: Theme.of(context).textTheme.titleMedium,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 8),
               Text(
-                'Práctica para calmar el sistema nervioso...',
+                meditation.description,
                 style: Theme.of(context).textTheme.bodySmall,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
