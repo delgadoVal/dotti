@@ -4,19 +4,15 @@ class ProgressSlider extends StatelessWidget {
   final double currentSeconds;
   final double totalSeconds;
   final ValueChanged<double> onSeek;
+  final String Function(double) formatTime;
 
   const ProgressSlider({
     required this.currentSeconds,
     required this.totalSeconds,
     required this.onSeek,
+    required this.formatTime,
     super.key,
   });
-
-  String _formatTime(double seconds) {
-    final m = (seconds ~/ 60).toString().padLeft(2, '0');
-    final s = (seconds % 60).toInt().toString().padLeft(2, '0');
-    return '$m:$s';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +29,8 @@ class ProgressSlider extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_formatTime(currentSeconds)),
-              Text(_formatTime(totalSeconds)),
+              Text(formatTime(currentSeconds)),
+              Text(formatTime(totalSeconds)),
             ],
           ),
         ),
