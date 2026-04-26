@@ -69,8 +69,8 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
           _isPlaying = false;
           _currentSeconds = 0;
         });
-        _audioPlayer.seek(Duration.zero);
         _audioPlayer.stop();
+        _audioPlayer.seek(Duration.zero);
       }
     });
   }
