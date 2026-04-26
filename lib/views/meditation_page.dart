@@ -1,3 +1,4 @@
+import 'package:dotti/widgets/completion_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,6 +27,7 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
   bool _isAudioEnabled = true;
   double _currentSeconds = 0;
   double _totalSeconds = 1;
+  bool _isCompleted = false;
 
   static const _meditationDuration = Duration(seconds: 30);
 
@@ -68,6 +70,7 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
         setState(() {
           _isPlaying = false;
           _currentSeconds = 0;
+          _isCompleted = true;
         });
         _audioPlayer.stop();
         _audioPlayer.seek(Duration.zero);
@@ -118,34 +121,43 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
 
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F2),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            TopBar(
-              title: meditation.title,
-              isAudioEnabled: _isAudioEnabled,
-              onAudioToggle: _toggleAudio,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                TopBar(
+                  title: meditation.title,
+                  isAudioEnabled: _isAudioEnabled,
+                  onAudioToggle: _toggleAudio,
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: AnimationArea(
+                    controller: _lottieController,
+                    animationAsset: meditation.animationAsset,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                ProgressSlider(
+                  currentSeconds: _currentSeconds,
+                  totalSeconds: _totalSeconds,
+                  onSeek: _onSeek,
+                  formatTime: _formatTime,
+                ),
+                const SizedBox(height: 16),
+                PlayPauseButton(
+                  isPlaying: _isPlaying,
+                  onToggle: _togglePlayPause,
+                ),
+                const SizedBox(height: 24),
+              ],
             ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: AnimationArea(
-                controller: _lottieController,
-                animationAsset: meditation.animationAsset,
-              ),
-            ),
-            const SizedBox(height: 24),
-            ProgressSlider(
-              currentSeconds: _currentSeconds,
-              totalSeconds: _totalSeconds,
-              onSeek: _onSeek,
-              formatTime: _formatTime,
-            ),
-            const SizedBox(height: 16),
-            PlayPauseButton(isPlaying: _isPlaying, onToggle: _togglePlayPause),
-            const SizedBox(height: 24),
-          ],
-        ),
+          ),
+          if (_isCompleted)
+            CompletionOverlay(meditationTitle: meditation.title),
+        ],
       ),
     );
   }
