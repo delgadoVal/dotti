@@ -3,13 +3,13 @@ import 'package:go_router/go_router.dart';
 
 class TopBar extends StatelessWidget {
   final String title;
-  final bool isBellEnabled;
-  final VoidCallback onBellToggle;
+  final bool isAudioEnabled;
+  final VoidCallback onAudioToggle;
 
   const TopBar({
     required this.title,
-    required this.isBellEnabled,
-    required this.onBellToggle,
+    required this.isAudioEnabled,
+    required this.onAudioToggle,
     super.key,
   });
 
@@ -24,8 +24,8 @@ class TopBar extends StatelessWidget {
         ),
         Text(title, style: Theme.of(context).textTheme.titleLarge),
         IconButton(
-          icon: Icon(isBellEnabled ? Icons.volume_up : Icons.volume_off),
-          onPressed: onBellToggle,
+          icon: Icon(isAudioEnabled ? Icons.volume_up : Icons.volume_off),
+          onPressed: onAudioToggle,
         ),
       ],
     );
