@@ -7,23 +7,32 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: MeditationCard(meditations[MeditationType.breathing]!),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          width: constraints.maxWidth,
+          height: constraints.maxHeight,
+          color: const Color(0xFFF2F2F2),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 48),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: meditations.values
+                    .map(
+                      (m) => Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: MeditationCard(m),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
           ),
-          SizedBox(width: 16),
-          Expanded(
-            child: MeditationCard(meditations[MeditationType.bodyScan]!),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: MeditationCard(meditations[MeditationType.visualization]!),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
