@@ -4,6 +4,7 @@ class Meditation {
   final MeditationType type;
   final String title;
   final String description;
+  final String imagePath;
   final String animationAsset;
   final String soundAsset;
 
@@ -11,6 +12,7 @@ class Meditation {
     required this.type,
     required this.title,
     required this.description,
+    required this.imagePath,
     required this.animationAsset,
     required this.soundAsset,
   });
@@ -22,6 +24,7 @@ const meditations = {
     type: MeditationType.breathing,
     title: 'Respiración 4-7-8',
     description: 'Inhala, retén y exhala.',
+    imagePath: 'assets/meditation.jpg',
     animationAsset: 'assets/animations/breathing.json',
     soundAsset: 'assets/sounds/breathing.mp3',
   ),
@@ -29,6 +32,7 @@ const meditations = {
     type: MeditationType.bodyScan,
     title: 'Respiración BodyScan',
     description: 'Conecta con tu cuerpo.',
+    imagePath: 'assets/meditation.jpg',
     animationAsset: 'assets/animations/breathing.json',
     soundAsset: 'assets/sounds/breathing.mp3',
   ),
@@ -36,6 +40,7 @@ const meditations = {
     type: MeditationType.visualization,
     title: 'Respiración y visualización',
     description: 'Redirige tu atención.',
+    imagePath: 'assets/meditation.jpg',
     animationAsset: 'assets/animations/breathing.json',
     soundAsset: 'assets/sounds/breathing.mp3',
   ),
