@@ -94,13 +94,6 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
     _audioPlayer.setVolume(_isAudioEnabled ? 1.0 : 0.0);
   }
 
-  void _onSeek(double value) {
-    final position = Duration(milliseconds: value.toInt());
-    _audioPlayer.seek(position);
-    _lottieController.value = value / _totalSeconds;
-    setState(() => _currentSeconds = value);
-  }
-
   @override
   void dispose() {
     _audioPlayer.dispose();
@@ -143,7 +136,6 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
                 ProgressSlider(
                   currentSeconds: _currentSeconds,
                   totalSeconds: _totalSeconds,
-                  onSeek: _onSeek,
                   formatTime: _formatTime,
                 ),
                 const SizedBox(height: 16),

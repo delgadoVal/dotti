@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 class ProgressSlider extends StatelessWidget {
   final double currentSeconds;
   final double totalSeconds;
-  final ValueChanged<double> onSeek;
   final String Function(double) formatTime;
 
   const ProgressSlider({
     required this.currentSeconds,
     required this.totalSeconds,
-    required this.onSeek,
     required this.formatTime,
     super.key,
   });
