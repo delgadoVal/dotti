@@ -49,7 +49,11 @@ class TopBar extends StatelessWidget {
             ],
           ),
           child: IconButton(
-            icon: Icon(isAudioEnabled ? Icons.volume_up : Icons.volume_off),
+            icon: Icon(
+              isAudioEnabled
+                  ? Icons.volume_up_outlined
+                  : Icons.volume_off_outlined,
+            ),
             onPressed: onAudioToggle,
           ),
         ),
