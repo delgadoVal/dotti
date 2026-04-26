@@ -1,7 +1,23 @@
+import 'package:dotti/core/theme/app_theme.dart';
+import 'package:dotti/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+
+  windowManager.waitUntilReadyToShow(
+    const WindowOptions(
+      minimumSize: Size(800, 560),
+      size: Size(1024, 680),
+      center: true,
+      titleBarStyle: TitleBarStyle.normal,
+    ),
+  );
+
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -9,21 +25,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [Text('Hello World')],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'dotti',
+      theme: AppTheme.light,
+      routerConfig: appRouter,
     );
   }
 }
