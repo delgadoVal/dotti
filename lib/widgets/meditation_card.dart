@@ -26,6 +26,7 @@ class MeditationCard extends ConsumerWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: [
             // Image
             AspectRatio(
@@ -44,8 +45,6 @@ class MeditationCard extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 8),
 
@@ -55,12 +54,11 @@ class MeditationCard extends ConsumerWidget {
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
             ),
 
             // Spacer
             const Spacer(),
+            const SizedBox(height: 20),
 
             // Button
             ElevatedButton(
