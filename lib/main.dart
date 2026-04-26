@@ -10,8 +10,8 @@ void main() async {
 
   windowManager.waitUntilReadyToShow(
     const WindowOptions(
-      minimumSize: Size(800, 550), // ancho mínimo para 3 cards cómodas
-      size: Size(1024, 680), // tamaño inicial
+      minimumSize: Size(800, 560),
+      size: Size(1024, 680),
       center: true,
       titleBarStyle: TitleBarStyle.normal,
     ),
