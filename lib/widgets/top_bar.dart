@@ -1,3 +1,4 @@
+import 'package:dotti/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,7 +21,7 @@ class TopBar extends StatelessWidget {
       children: [
         Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
@@ -38,7 +39,7 @@ class TopBar extends StatelessWidget {
         Text(title, style: Theme.of(context).textTheme.titleLarge),
         Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(

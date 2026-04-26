@@ -15,7 +15,7 @@ abstract final class AppTheme {
     scaffoldBackgroundColor: AppColors.background,
 
     textTheme: TextTheme(
-      displayLarge: AppTypography.heading1,
+      titleLarge: AppTypography.heading1,
       titleMedium: AppTypography.subHeading,
       bodyMedium: AppTypography.body,
       labelLarge: AppTypography.button,

@@ -1,3 +1,4 @@
+import 'package:dotti/core/theme/app_colors.dart';
 import 'package:dotti/models/meditation.dart';
 import 'package:dotti/providers/meditation_provider.dart';
 import 'package:flutter/material.dart';
@@ -41,10 +42,7 @@ class MeditationCard extends ConsumerWidget {
             // Title
             Text(
               meditation.title,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
 
@@ -63,8 +61,8 @@ class MeditationCard extends ConsumerWidget {
             // Button
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFB3B3F5),
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.primarySoft,
+                foregroundColor: AppColors.textOnPrimary,
                 shape: const StadiumBorder(),
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),

@@ -24,11 +24,17 @@ class ProgressSlider extends StatelessWidget {
             children: [
               Text(
                 formatTime(currentSeconds),
-                style: const TextStyle(fontSize: 11, color: Color(0xFF888888)),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 12,
+                  color: Color(0xFF888888),
+                ),
               ),
               Text(
                 formatTime(totalSeconds),
-                style: const TextStyle(fontSize: 11, color: Color(0xFF888888)),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 12,
+                  color: Color(0xFF888888),
+                ),
               ),
             ],
           ),

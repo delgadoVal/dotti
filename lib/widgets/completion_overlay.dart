@@ -1,3 +1,4 @@
+import 'package:dotti/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:go_router/go_router.dart';
@@ -37,24 +38,22 @@ class CompletionOverlay extends StatelessWidget {
                   children: [
                     ShaderMask(
                       shaderCallback: (bounds) => const LinearGradient(
-                        colors: [Color(0xFFB2B9FB), Color(0xFFFFAE88)],
+                        colors: [AppColors.primarySoft, AppColors.accent],
                       ).createShader(bounds),
-                      child: const Text(
+                      child: Text(
                         '¡Bien hecho!',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.textPrimary,
+                            ),
                       ),
                     ),
                     const SizedBox(height: 12),
                     Text(
                       'Has terminado la práctica de $meditationTitle.',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black54,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
@@ -62,16 +61,13 @@ class CompletionOverlay extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFB3B3F5),
-                          foregroundColor: Colors.white,
+                          backgroundColor: AppColors.primarySoft,
+                          foregroundColor: AppColors.textOnPrimary,
                           shape: const StadiumBorder(),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
                         onPressed: () => context.go('/'),
-                        child: const Text(
-                          'Continuar',
-                          style: TextStyle(fontSize: 16),
-                        ),
+                        child: const Text('Continuar'),
                       ),
                     ),
                   ],
