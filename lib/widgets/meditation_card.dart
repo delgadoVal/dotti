@@ -1,6 +1,8 @@
 import 'package:dotti/models/meditation.dart';
+import 'package:dotti/providers/meditation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class MeditationCard extends ConsumerWidget {
   const MeditationCard(this.meditation, {super.key});
@@ -11,53 +13,71 @@ class MeditationCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       color: Colors.white,
-      child: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 16,
-            right: 16,
-            top: 16,
-            bottom: 24,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    'assets/meditation.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+      elevation: 8,
+      shadowColor: Colors.black26,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 16,
+          bottom: 24,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Image
+            AspectRatio(
+              aspectRatio: 4 / 3,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(meditation.imagePath, fit: BoxFit.cover),
               ),
-              Text(
-                meditation.title,
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.justify,
+            ),
+            const SizedBox(height: 20),
+
+            // Title
+            Text(
+              meditation.title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
-              const SizedBox(height: 8),
-              Text(
-                meditation.description,
-                style: Theme.of(context).textTheme.bodySmall,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 8),
+
+            // Description
+            Text(
+              meditation.description,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+
+            // Spacer
+            const Spacer(),
+
+            // Button
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFB3B3F5),
+                foregroundColor: Colors.white,
+                shape: const StadiumBorder(),
+                padding: const EdgeInsets.symmetric(vertical: 14),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Center(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Reproducir'),
-                  ),
-                ),
-              ),
-            ],
-          ),
+              onPressed: () {
+                ref.read(selectedMeditationProvider.notifier).state =
+                    meditation;
+                context.go('/meditation');
+              },
+              child: const Text('Reproducir'),
+            ),
+          ],
         ),
       ),
     );
