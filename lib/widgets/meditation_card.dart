@@ -42,7 +42,9 @@ class MeditationCard extends ConsumerWidget {
             // Title
             Text(
               meditation.title,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium!.copyWith(fontSize: 20),
             ),
             const SizedBox(height: 8),
 
