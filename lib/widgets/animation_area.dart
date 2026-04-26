@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class AnimationArea extends StatelessWidget {
-  const AnimationArea({super.key});
+  final AnimationController controller;
+  final String animationAsset;
+
+  const AnimationArea({
+    required this.controller,
+    required this.animationAsset,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
-      child: Container(
+      child: LottieBuilder.asset(
+        animationAsset,
+        controller: controller,
+        onLoaded: (composition) {
+          controller.duration = composition.duration;
+        },
+        fit: BoxFit.contain,
         width: double.infinity,
-        color: Colors.grey[200],
-        // child: LottieBuilder.asset(...)
       ),
     );
   }
