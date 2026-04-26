@@ -18,14 +18,40 @@ class TopBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () => context.go('/'),
+        Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 8,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () => context.go('/'),
+          ),
         ),
         Text(title, style: Theme.of(context).textTheme.titleLarge),
-        IconButton(
-          icon: Icon(isAudioEnabled ? Icons.volume_up : Icons.volume_off),
-          onPressed: onAudioToggle,
+        Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 8,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: IconButton(
+            icon: Icon(isAudioEnabled ? Icons.volume_up : Icons.volume_off),
+            onPressed: onAudioToggle,
+          ),
         ),
       ],
     );
