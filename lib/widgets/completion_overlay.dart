@@ -43,7 +43,7 @@ class CompletionOverlay extends StatelessWidget {
                         '¡Bien hecho!',
                         style: TextStyle(
                           fontSize: 32,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           color: Colors.white,
                         ),
                       ),
