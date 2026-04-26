@@ -1,4 +1,4 @@
-enum MeditationType { breathing, bodyScan, visualization }
+enum MeditationType { breathing1, breathing2, breathing3 }
 
 class Meditation {
   final MeditationType type;
@@ -20,27 +20,29 @@ class Meditation {
 
 // Available meditations catalog
 const meditations = {
-  MeditationType.breathing: Meditation(
-    type: MeditationType.breathing,
+  MeditationType.breathing1: Meditation(
+    type: MeditationType.breathing1,
     title: 'Respiración 4-7-8',
-    description: 'Inhala, retén y exhala.',
-    imagePath: 'assets/meditation.jpg',
+    description:
+        'Práctica para calmar el sistema nervioso y regular la presión arterial.',
+    imagePath: 'assets/img/tecnica_4_7_8.png',
     animationAsset: 'assets/animations/breathing.json',
     soundAsset: 'assets/sounds/breathing.mp3',
   ),
-  MeditationType.bodyScan: Meditation(
-    type: MeditationType.bodyScan,
-    title: 'Respiración BodyScan',
-    description: 'Conecta con tu cuerpo.',
-    imagePath: 'assets/meditation.jpg',
+  MeditationType.breathing2: Meditation(
+    type: MeditationType.breathing2,
+    title: 'Respiración cuadrada',
+    description:
+        'Práctica para reducir el cortisol y disminuir la frecuencia cardíaca',
+    imagePath: 'assets/img/tecnica_cuadrada.png',
     animationAsset: 'assets/animations/breathing.json',
     soundAsset: 'assets/sounds/breathing.mp3',
   ),
-  MeditationType.visualization: Meditation(
-    type: MeditationType.visualization,
-    title: 'Respiración y visualización',
-    description: 'Redirige tu atención.',
-    imagePath: 'assets/meditation.jpg',
+  MeditationType.breathing3: Meditation(
+    type: MeditationType.breathing3,
+    title: 'Respiración 4-6',
+    description: 'Práctica para regular la respuesta del sistema nervioso.',
+    imagePath: 'assets/img/tecnica_4_6.png',
     animationAsset: 'assets/animations/breathing.json',
     soundAsset: 'assets/sounds/breathing.mp3',
   ),
