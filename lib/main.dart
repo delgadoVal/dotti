@@ -1,3 +1,4 @@
+import 'package:dotti/core/theme/app_theme.dart';
 import 'package:dotti/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +27,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'dotti',
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+      theme: AppTheme.light,
       routerConfig: appRouter,
     );
   }
