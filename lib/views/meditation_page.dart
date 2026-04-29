@@ -53,6 +53,8 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
 
     await _audioPlayer.setAsset(meditation.soundAsset);
 
+    if (!mounted) return;
+
     setState(() {
       _totalSeconds = _audioPlayer.duration?.inMilliseconds.toDouble() ?? 1;
     });
@@ -76,6 +78,10 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
         _audioPlayer.seek(Duration.zero);
       }
     });
+
+    _audioPlayer.play();
+    _lottieController.forward();
+    setState(() => _isPlaying = true);
   }
 
   void _togglePlayPause() {
