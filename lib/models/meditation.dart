@@ -33,7 +33,7 @@ const meditations = {
     type: MeditationType.breathing2,
     title: 'Respiración cuadrada',
     description:
-        'Práctica para reducir el cortisol y disminuir la frecuencia cardíaca',
+        'Práctica para reducir el cortisol y disminuir la frecuencia cardíaca.',
     imagePath: 'assets/img/tecnica_cuadrada.png',
     animationAsset: 'assets/animations/tecnica_cuadrada.json',
     soundAsset: 'assets/audio/tecnica_cuadrada.mp3',
