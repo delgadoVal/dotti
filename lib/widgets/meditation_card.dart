@@ -62,11 +62,28 @@ class MeditationCard extends ConsumerWidget {
 
             // Button
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primarySoft,
-                foregroundColor: AppColors.textOnPrimary,
-                shape: const StadiumBorder(),
-                padding: const EdgeInsets.symmetric(vertical: 14),
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith<Color>((
+                  states,
+                ) {
+                  if (states.contains(WidgetState.hovered)) {
+                    return AppColors.primary;
+                  }
+                  return AppColors.primarySoft;
+                }),
+                foregroundColor: WidgetStateProperty.resolveWith<Color>((
+                  states,
+                ) {
+                  if (states.contains(WidgetState.hovered)) {
+                    return AppColors.textOnPrimary;
+                  }
+                  return AppColors.textOnPrimary;
+                }),
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                shape: WidgetStateProperty.all(const StadiumBorder()),
+                padding: WidgetStateProperty.all(
+                  const EdgeInsets.symmetric(vertical: 14),
+                ),
               ),
               onPressed: () {
                 ref.read(selectedMeditationProvider.notifier).state =

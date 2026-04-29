@@ -46,7 +46,7 @@ class CompletionOverlay extends StatelessWidget {
                             .copyWith(
                               fontSize: 32,
                               fontWeight: FontWeight.w500,
-                              color: AppColors.textPrimary,
+                              color: Colors.white,
                             ),
                       ),
                     ),
