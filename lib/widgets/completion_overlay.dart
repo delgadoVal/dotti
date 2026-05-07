@@ -60,11 +60,28 @@ class CompletionOverlay extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primarySoft,
-                          foregroundColor: AppColors.textOnPrimary,
-                          shape: const StadiumBorder(),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStateProperty.resolveWith<Color>((states) {
+                                if (states.contains(WidgetState.hovered)) {
+                                  return AppColors.primary;
+                                }
+                                return AppColors.primarySoft;
+                              }),
+                          foregroundColor:
+                              WidgetStateProperty.resolveWith<Color>((states) {
+                                if (states.contains(WidgetState.hovered)) {
+                                  return AppColors.textOnPrimary;
+                                }
+                                return AppColors.textOnPrimary;
+                              }),
+                          overlayColor: WidgetStateProperty.all(
+                            Colors.transparent,
+                          ),
+                          shape: WidgetStateProperty.all(const StadiumBorder()),
+                          padding: WidgetStateProperty.all(
+                            const EdgeInsets.symmetric(vertical: 16),
+                          ),
                         ),
                         onPressed: () => context.go('/'),
                         child: const Text('Continuar'),
