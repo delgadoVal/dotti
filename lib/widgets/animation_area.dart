@@ -4,10 +4,12 @@ import 'package:lottie/lottie.dart';
 class AnimationArea extends StatelessWidget {
   final AnimationController controller;
   final String animationAsset;
+  final Function(LottieComposition)? onLoaded;
 
   const AnimationArea({
     required this.controller,
     required this.animationAsset,
+    this.onLoaded,
     super.key,
   });
 
@@ -20,6 +22,7 @@ class AnimationArea extends StatelessWidget {
         controller: controller,
         onLoaded: (composition) {
           controller.duration = composition.duration;
+          onLoaded?.call(composition);
         },
         fit: BoxFit.contain,
         width: double.infinity,

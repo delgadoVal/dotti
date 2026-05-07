@@ -25,11 +25,7 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
 
   bool _isPlaying = false;
   bool _isAudioEnabled = true;
-  double _currentSeconds = 0;
-  double _totalSeconds = 1;
   bool _isCompleted = false;
-
-  static const _meditationDuration = Duration(seconds: 30);
 
   @override
   void initState() {
@@ -37,48 +33,37 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
 
     _lottieController = AnimationController(
       vsync: this,
-      duration: _meditationDuration,
+      duration: const Duration(seconds: 1),
     );
 
-    setState(() {
-      _totalSeconds = _meditationDuration.inMilliseconds.toDouble();
-    });
+    _lottieController.addListener(_onAnimationProgress);
+    _lottieController.addStatusListener(_onAnimationStatus);
+  }
 
-    _initAudio();
+  void _onAnimationProgress() {
+    if (mounted) setState(() {});
+  }
+
+  void _onAnimationStatus(AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      _audioPlayer.stop();
+      setState(() {
+        _isPlaying = false;
+        _isCompleted = true;
+      });
+    }
   }
 
   Future<void> _initAudio() async {
     final meditation = ref.read(selectedMeditationProvider);
     if (meditation == null) return;
-
     await _audioPlayer.setAsset(meditation.soundAsset);
+  }
 
+  void _onAnimationLoaded(Duration animationDuration) async {
+    _lottieController.duration = animationDuration;
+    await _initAudio();
     if (!mounted) return;
-
-    setState(() {
-      _totalSeconds = _audioPlayer.duration?.inMilliseconds.toDouble() ?? 1;
-    });
-
-    _audioPlayer.positionStream.listen((position) {
-      if (mounted) {
-        setState(() => _currentSeconds = position.inMilliseconds.toDouble());
-      }
-    });
-
-    _audioPlayer.playerStateStream.listen((state) {
-      if (state.processingState == ProcessingState.completed) {
-        _lottieController.stop();
-        _lottieController.reset();
-        setState(() {
-          _isPlaying = false;
-          _currentSeconds = 0;
-          _isCompleted = true;
-        });
-        _audioPlayer.stop();
-        _audioPlayer.seek(Duration.zero);
-      }
-    });
-
     _audioPlayer.play();
     _lottieController.forward();
     setState(() => _isPlaying = true);
@@ -102,8 +87,10 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    _lottieController.removeListener(_onAnimationProgress);
+    _lottieController.removeStatusListener(_onAnimationStatus);
     _lottieController.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -117,6 +104,10 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
   @override
   Widget build(BuildContext context) {
     final meditation = ref.watch(selectedMeditationProvider)!;
+
+    final totalMs = (_lottieController.duration ?? Duration.zero).inMilliseconds
+        .toDouble();
+    final currentMs = (_lottieController.value * totalMs);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F2),
@@ -136,12 +127,14 @@ class _MeditationPageState extends ConsumerState<MeditationPage>
                   child: AnimationArea(
                     controller: _lottieController,
                     animationAsset: meditation.animationAsset,
+                    onLoaded: (composition) =>
+                        _onAnimationLoaded(composition.duration),
                   ),
                 ),
                 const SizedBox(height: 24),
                 ProgressSlider(
-                  currentSeconds: _currentSeconds,
-                  totalSeconds: _totalSeconds,
+                  currentSeconds: currentMs,
+                  totalSeconds: totalMs,
                   formatTime: _formatTime,
                 ),
                 const SizedBox(height: 16),
