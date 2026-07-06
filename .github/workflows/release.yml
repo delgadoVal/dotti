@@ -1,0 +1,143 @@
+name: Build & Release dotti
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  # ─────────────────────────────────────────
+  # JOB 1: Build macOS → DMG
+  # ─────────────────────────────────────────
+  build-macos:
+    name: macOS DMG
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build macOS release
+        run: flutter build macos --release
+
+      - name: Install create-dmg
+        run: brew install create-dmg
+
+      - name: Stage .app for DMG
+        run: |
+          mkdir -p /tmp/dotti-stage
+          cp -R "build/macos/Build/Products/Release/dotti.app" /tmp/dotti-stage/
+
+      - name: Create DMG
+        run: |
+          create-dmg \
+            --volname "dotti" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "dotti.app" 175 190 \
+            --hide-extension "dotti.app" \
+            --app-drop-link 425 190 \
+            "build/dotti-macos.dmg" \
+            "/tmp/dotti-stage/"
+
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotti-macos
+          path: build/dotti-macos.dmg
+          retention-days: 7
+
+  # ─────────────────────────────────────────
+  # JOB 2: Build Windows → ZIP
+  # ─────────────────────────────────────────
+  build-windows:
+    name: Windows ZIP
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Windows release
+        run: flutter build windows --release
+
+      - name: Zip release output
+        run: |
+          $src = "build\windows\x64\runner\Release"
+          $dst = "build\dotti-windows.zip"
+          Compress-Archive -Path "$src\*" -DestinationPath $dst
+        shell: pwsh
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotti-windows
+          path: build/dotti-windows.zip
+          retention-days: 7
+
+  # ─────────────────────────────────────────
+  # JOB 3: GitHub Release (adjunta ambos archivos)
+  # Solo corre si el trigger fue un tag v*.*.*
+  # ─────────────────────────────────────────
+  release:
+    name: Publish GitHub Release
+    needs: [build-macos, build-windows]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dotti-macos
+          path: dist/
+
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dotti-windows
+          path: dist/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "dotti ${{ github.ref_name }}"
+          body: |
+            ## dotti ${{ github.ref_name }}
+
+            ### Instalación
+            - **macOS**: Descarga `dotti-macos.dmg`, ábrelo y arrastra dotti a Aplicaciones.
+            - **Windows**: Descarga `dotti-windows.zip`, extrae y ejecuta `dotti.exe`.
+
+            > Si macOS bloquea la app por ser de desarrollador no identificado:
+            > `xattr -cr /Applications/dotti.app`
+          files: |
+            dist/dotti-macos.dmg
+            dist/dotti-windows.zip
+          draft: false
+          prerelease: false
